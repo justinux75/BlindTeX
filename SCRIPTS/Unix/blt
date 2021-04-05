@@ -1,0 +1,18 @@
+#!/bin/bash
+BTX="$HOME/BlindTeX/"
+Directorio="`pwd`"
+cd $BTX
+if [ $1 = "-e" ] ; then
+	python3 mainBlindtex.py -e $2
+elif [ $1 = "-h" ] ; then
+	python3 mainBlindtex.py -h
+else
+((k=0))
+declare -a lista
+for i in "$@"; do lista[k]=$i;((k++));done
+args=${lista[@]::$(($#-1))}
+archivo=${!#}
+fullPath=`echo $Directorio/$archivo`
+python3 mainBlindtex.py $args "$fullPath"
+fi
+cd "$Directorio"
