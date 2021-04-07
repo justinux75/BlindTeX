@@ -53,7 +53,7 @@ def convertDocument(fileName, format=0,aux='no',undo='no',transl="latexml"):
 	#Write another tex file without formulas.
 	iotools.iotools.replaceAndWrite(documentContent,newDocumentContent,os.path.join(filePath,'noFormula_'+name))
 	
-	#converter.parser.setOption(0)
+	converter.parser.setOption(0)
 	#Convert the formulas
 	for index in range(len(documentAndLists.inlineList)):
 		documentAndLists.inlineList[index] = converter.parser.convert(documentAndLists.inlineList[index])
@@ -168,13 +168,12 @@ if __name__=='__main__':
 		print("Equation: ", converter.parser.convert(args.equation))
 		print("Equation: ", args.equation)
 	else:
-		if \addtocounter{•}{•}
-		rgs.document:
+		if args.document:
 			print('Converting to xhtml...')
 			convertDocument(args.document,format,aux,undo)
 			if browser=="on":
-				if os.name=='nt':
-					browserOn=os.system('start firefox '+ args.document[:-4]+'.xhtml"')
+				if os.name=='NT':
+					browserOn=os.system('start mozilla '+ args.document[:-4]+'.xhtml"')
 				else:
 					browserOn=os.system('open -a  Safari "'+ args.document[:-4]+'.xhtml"')
 				if browserOn==0:

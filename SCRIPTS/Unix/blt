@@ -2,7 +2,9 @@
 BTX="$HOME/BlindTeX/"
 Directorio="`pwd`"
 cd $BTX
-if [ $1 = "-e" ] ; then
+if [ "$#" -eq 0 ] ; then
+	python3 blindtexGUI.py
+elif [ $1 = "-e" ] ; then
 	python3 mainBlindtex.py -e $2
 elif [ $1 = "-h" ] ; then
 	python3 mainBlindtex.py -h

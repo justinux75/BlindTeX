@@ -1,8 +1,10 @@
 DESCRIPTION:
 This is a software which allows to convert LaTeX formulas to a natural language format. The main goal of it is to allow visual impaired people to access to mathematical content in documents writen in LaTeX format, with the help of a screen reader.
 
-The program has two modes of use: the first one is by converting the LaTeX document to an xhtml format (with the help of an external software, LaTeXML program) with the mathematical equations translated with the BlindTeX engine. In this way, users can use their web browser to navigate through the document and read the equations in text mode (we  suggest that this navigation can be performed with ‘word navigation mode’ in the screen reader so that  each mathematical symbol can be read  on a single ‘key hit’).
-The secon mode of use  is by transformin LaTeX equations individually. This mode  does not need of any external program.
+The program has two modes of use: the first one is by graphic usser interface (GUI) and the other is by the command line. For any of these two modes we can:
+1.  convert a full  LaTeX document to an xhtml format (with the help of an external software, LaTeXML program) with the mathematical equations translated with the BlindTeX engine. In this way, users can use their web browser to navigate through the document and read the equations in text mode (we  suggest that this navigation can be performed with ‘word navigation mode’ in the screen reader so that  each mathematical symbol can be read  on a single ‘key hit’).
+
+2.  transform LaTeX equations individually. For this,   there is no need of any external program.
 
 IMPORTANT REMARK:
 We re-write the blindtex project (http://www.github.com/blindtex/blindtex/) adding new features and leaving others, so that it be easier work with files. This changes have been done in a different repository due to the code in this one, is not so clean and stable as it is that in the original repository. So, for those who are interested in colaborate or to have a more professional code we suggest to go to that repositoy.
@@ -10,27 +12,33 @@ We re-write the blindtex project (http://www.github.com/blindtex/blindtex/) addi
 DIFFERENCES:
 
    The general differences with respect to the original BlindTeX proyect are:
-1. We have omitted all references to the GUI and we leave all the functionality from the terminal.
-2. We are not incorporating the AST implementation of the last version of the original 	 projec	t.
-3. We have added features that allow to deal with user’s macros, including tex files from the main LaTeX document and we have extended the dictionaries and some other structures in the parsing.
+
+1. We are not incorporating the AST implementation of the last version of the original 	 project.
+2. We have added features that allow to deal with user’s macros, including tex files from the main LaTeX document and we have extended the dictionaries and some other structures in the parsing.
 
 Up to now, we have only support for spanish dictionaries, but  we hope that we can give support for english and  another languages.
 
 BEFORE INSTALATION:
 
-In order to work with this version of BTX  it is needed to have previously installed the following software:
+In order to work with all the features of  this version of BTX  it is needed to have previously installed the following software:
 1. Python 3. (www.python.org)
 2. We make use of the python ply module (sudo pip install ply, or put the module into the ‘converter’ folder).
-3. A LaTeX distribution (for instance MiKTeX in Windows or LiveTeX in Linux or MACOS).
-4. We use the ‘LaTeXML’ project to convert LaTeX documents to xhtml format, so it is needed to have installed the latexml program (see, https://dlmf.nist.gov/LaTeXML/get.html)
+3. We make use of the python WXPython module for the GUI. (type pip install wxpython in a cmd with administration permissions in Windows, or sudo pip install wxpython in Unix  terminal).
+
+4. A LaTeX distribution (for instance MiKTeX in Windows or LiveTeX in Linux or MACOS).
+5. We use the ‘LaTeXML’ project to convert LaTeX documents to xhtml format, so it is needed to have installed the latexml program (see, https://dlmf.nist.gov/LaTeXML/get.html)
 The BlindTeX scripts make use of the two commands:
 latexml -dest=file.xml file.tex
 latexmlpost -dest=file.xhtml file.xml
 So it is important to ensure that these commands can be executed from your terminal.
-4. By default we assume that your  browser is ‘Mozilla Firefox’ in Windows or ‘Safari’ in MACOS. (This can be changed easily from the code)
+6. By default we assume that your  browser is ‘Mozilla Firefox’ in Windows or ‘Safari’ in MACOS. (This can be changed easily from the code (at the end of the mainBlindtex.py script))
+
+Note: The only absolutely needed pre-installation is that of python3 and ply module. The WXpython module is needed for the graphical interface and the LaTeXML program is needed for the full text conversion. So if you only want to try the code we suggest the minimal pre-installation.
+
 INSTALLATION:
-We are not providing packaging of the software, so it is neccsary to install the software manually. You may take the following steps:
-1.- Download or clone the repository, and move the BlindTeX folder (that inside the main  folder), to a preferred place (we suggest to put it in the root, ‘C:\BlindTeX’, in Windows), and int the user's home folder in Linux or MacOS. If you decide to change the location, please change the  "BTX" variable  in the blt scripts appropriately. 
+We are not providing packaging or installers  for the software, so it is neccesary to install the software manually. You may take the following steps:
+1.- Download or clone the repository, and move the BlindTeX folder (that inside the main  folder), to a preferred place (we suggest to put it in the home directory, ‘C:\Users/[user's name]\BlindTeX’, in Windows), or '/Users/[user's name]/BlindTeX' in Linux or MacOS. (tTo find out the correct location type 'echo %homepath%' in a cmd in Windows or 'echo $HOME' in a Unix terminal). If you decide to change the location, please change the  "BTX" variable  in the blt scripts appropriately. 
+  Note: If your intention is only trying the single formula conversion as a simple trial, we suggest just to move to the BlindTeX/BlindTeX forlder and execute ‘blindtexGUI.py”  (typing ‘python blindtexGUI.py” on a terminal) for opening  the GUI version.
 2. Move the blt.bat file for Windows  or blt  shell script for MacOS or Linux in a folder included in the user’s PATH. If you do not know what is this, we suggest to create a  ‘bin’ folder as following:
 	a. Create a folder named ‘bin’ in a location into the user’s folder (for instance, ‘C:\Users\[Name of the user]\bin’ in Windows or ‘/Users/[Name of the user/bin’ for MacOS or Linux).
 	b. Include the bin folder to the PATH. In Windows press Windows key and X, and afterwards press ‘a’ to open a Power Shell. Type ‘sysdm.cpl’ to open System preferences. Go to  ‘Advanced Options’ and User’s variables. Add  the exact path of the new ‘bin’ folder. In  Linux or MacOS open a terminal and open the file ‘.bash_profile’ and write at the end of the file 
@@ -39,9 +47,13 @@ We are not providing packaging of the software, so it is neccsary to install the
 	chmod a+x blt
    
 
-If all has gone fine, by typing ‘blt -h’ in the terminal you should obtain some ‘warnings’ about the parser and a ‘help’ of the use of the ‘mainBlindTeX.py’ script.
+If all has gone fine, by typing ‘blt -h’ in the terminal you should open an instance of the GUI BlindTeX or    some ‘warnings’ about the parser and a ‘help’ of the use of the ‘mainBlindTeX.py’ script.
  
-USE:
+GUI USE:
+1.Just by typing 'blt' you should obtain an instance of the BlindTeX HUI, a windows with a menu bar and two text pannels. In one you can write an equation in LaTeX format (without the $' delimiters) and pressing Alt+L, it converts the equation to a natural descriptiion wchi appears in the second text pannel.
+2. If you want to convert a full LaTeX document, go to action menu > convert Document, and select the LaTeX document to convert to xhtml.
+  
+TERMINAL USE:
 We can use BTX in two ways:
 
 1. Converting full LaTeX documents.

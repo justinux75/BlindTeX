@@ -36,7 +36,7 @@ def formulate(label, option):
 		label(str): The label that is needed in a span tag, 
 						if the label has accents it is recomended put them as html asks.
 		option(int): Gives the following options:
-					option = 0, return the label as '<span aria-label=\"label\">&nbsp;</span>'
+					option = 0, return the label as simple Html text given by LABEL 
 					option = 1, return the changes the html accents for UTF-8 accents and returns label plus a space.
 					option = 2, return the label as <math aria-label=\"label\">&nbsp;</math>
 					option = 3, return the label with math accents.
@@ -46,7 +46,7 @@ def formulate(label, option):
 
 	'''
 	if (option == 0):
-		return '<span aria-label=\"' +label + '">&nbsp;</span>'
+		return label + ' '
 	elif (option == 1):
 		return replaceHtml(label) +' ' 
 	elif (option == 2):
