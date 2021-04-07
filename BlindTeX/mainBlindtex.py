@@ -172,8 +172,8 @@ if __name__=='__main__':
 			print('Converting to xhtml...')
 			convertDocument(args.document,format,aux,undo)
 			if browser=="on":
-				if os.name=='NT':
-					browserOn=os.system('start mozilla '+ args.document[:-4]+'.xhtml"')
+				if os.name=='nt':
+					browserOn=os.system('start firefox "'+ args.document[:-4]+'.xhtml"')
 				else:
 					browserOn=os.system('open -a  Safari "'+ args.document[:-4]+'.xhtml"')
 				if browserOn==0:
