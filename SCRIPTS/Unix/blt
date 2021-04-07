@@ -5,7 +5,7 @@ cd $BTX
 if [ "$#" -eq 0 ] ; then
 	python3 blindtexGUI.py
 elif [ $1 = "-e" ] ; then
-	python3 mainBlindtex.py -e $2
+	python3 mainBlindtex.py -e "$2"
 elif [ $1 = "-h" ] ; then
 	python3 mainBlindtex.py -h
 else
