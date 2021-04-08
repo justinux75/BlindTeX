@@ -1,0 +1,127 @@
+DESCRIPCIÓN:
+Este es un software que permite convertir  fórmulas en formato LaTeX a su traducción a lenguaje natural Su principal meta es permitir el acceso a  personas con alguna discapacidad visual a  contenido  matemático escrito en LaTeX y con la ayuda de un lector de pantalla.
+
+El programa posee dos modos de uso: el primero es mediante una interfaz gráfica de usuario (GUI) y la otra es mediante la línea de comandos. Para cada undo de estos modos podemos:
+  1. Convertir un documento completo escrito en  LaTeX a formato xhtml (accesible mediante un navegador web), por medio de un programa externo (LaTeXML), y con las fórmulas matemáticas traducidas a lenguaje natural con el motor de BlindTeX. De este modo, el usuario puede navegar p por el documento con la ayuda de cualquier navegador web, y las ecuaciones matemáticas pueden ser exploradas en modo texto (se sugiere que se exploren mediante la navegación por palabras en el lector de pantalla de modo que cada símbolo o estructura  matemática sea leida a golpe de pulsación de tecla y así hacer más fácil la comprensión de la descripción de la fórmula).
+2. Convertir ecuaciones en formato LaTeX de forma individual. Para esta función no es necesario tener instalado ningún programa externo como LaTeXML.
+
+NOTA IMPORTANTE:
+Este código es una versión del código localizado en el repositorio original de BlindTeX:
+http://www.github.com/blindtex/blindtex/
+Aquí hemos reescrito parte del código original para dar una funcionalidad distinta. No se ha fundido este código con el original ya que este código puede ser menos claro y más inestable que el original. Cualquier persona que desee obtener  un código más profesional y estable, o cualquiera que desee colaborar en el código, les sugerimos dirigirse al código original.
+
+DIFERENCIAS:
+Las diferencias principales con respecto al código original son:
+1. No hemos incorporado aquí la implementación por árboles sintácticos abstractos (AST).
+2. Hemos añadido nuevas funcionalidades referentes a la sustitución de macros definidas por el usuario y la adición de archivos llamados por el documento principal (ordenes \inpu e \include) que hacen más sencillo el manejo de los archivos LTeX por parte del usuario.
+3. Hemos añadido más entradas a los diccionarios  y algunas estructuras matemáticas que no estaban en el código original.
+NOTA: Hasta ahora solo tenemos soporte para la traducción de fórmulas   en español. Esperamos en breve tener una versión que incorpore el inglés u otros idiomas (incluyendo soporte para Braille en dichos idiomas).
+
+
+ANTES DE LA INSTALACIÓN:
+Para tener acceso a toda la funcionalidad de BlindTeX se requiere la instalación previa del siguiente software:
+1. Python 3: para ello puede o bien ir  a la tienda de MicroSoft en Windows y bajarse  e instalar cualquier versión de python3 o ir directamente a www.python.org y seguir los pasos según el sistema operativo instalado. (En cualquiera de las opciones, el software es libre y gratuito).
+Para asegurarse que la instalación ha ido bien, abra un terminal (teclas Windows+R y escribir cmd, en windows, o abrir una terminal en Unix). y escribir 
+python --version
+y pulsar la tecla Intro. Debería aparecer la versión de python instalada.
+2. Incluir los módulos de python necesarios PLY y WXPYTHON: para ello, abrir una ventana de la terminal con privilegios de administrador (tecla Windows+X, y uego pulse A, y aceptar, en Windows,) y escribir:
+pip install ply
+pip install wxpython
+En los sistemas UNIX, simplemente abra una terminal y escriba
+sudo pip install ply
+sudo pip install wxpython
+e introduzca la clave de administrador después de cada comando  cuando se  solicite.
+Para comprobar que todo está en orden pulse Intro después de escribir
+python
+en la terminal. Se abrirá una "IDE" de python con el símbolo ">>>". Escriba,
+import ply
+import wx
+(pulsando Intro al terminar cada línea) si no hay errores es que todo va bien. Para salir del IDE de python, escriba exit() o Ctrl+Z, en Windows, o Ctrl+D en UNIX.  
+3. Una distribución de LaTeX: Puede instalarse MiKTeX en Windows o TeXLive en Unix. Ambas distribuciones son gratuitas desde sus respectivas  páginas oficiales.
+Una vez instalada la distribución podemos probar si todo está bien con el siguiente comando en una terminal:
+pdflatex file.tex
+donde file.tex es cualquier archivo en formato LaTeX de nombre 'file'  que se sitúe en la misma ubicación donde estemos ejecutando el comando (en el código anterior cambiamos la palabra 'file' por el nombre real del archivo). Como muestra se puede usar cualquier archivo de la carpeta EXAMPLES/LaTeX/.
+Se debe haber creado en la misma carpeta donde ejecutamos el comando un archivo pdf, file.pdf, que podemos abrirlo y comprobar que se creó el documento correctamente.
+
+4. LaTeXML Software: para la conversión de un documento completo de LaTeX a formato xHTML (web) usamos el software LaTeXML que es también un proyecto de código y distribución  libre (ver https://dlmf.nist.gov/LaTeXML/get.html para su instalación). 
+5.  Se debe tener instalado un navegador web. En principio BlindTeX requiere de Mozilla Firefox en Windows y Safari enMacOS. Sin embargo, es fácil cambiar estos parámetros editando el archivo mainBlindtex.py, y casi al final de dicho archivo cambiar los parámetros convenientemente.
+
+NOTA: El software mínimo requerido  es PYTHON 3 y el módulo PLY. El módulo WXPYTHON es sólo necesario para ejecutar la interfaz gráfica, LaTeXML es necesario solo para convertir un documento completo a formato xHTML, y MiKTeX o TeXLive solo se usa para comprobar la escritura correcta del documento y su conversión a formato PDF. Si solo desea probar cómo funciona el motor de BlindTeX para convertir ecuaciones individuales  sugerimos instalar solamente PYTHON 3, el módulo PLY y el módulo WXPython. y ejecutar el correspondiente script en la carpeta de SCRIPTS, para Windows   "\blindtex\SCRIPTS\Windows\blt.bat" o en Unix,  "/blindtex/SCRIPTS/UNIX/blt".
+ 
+INSTALACIÓN:
+
+Como se acaba de indicar, si solo se desea probar el motor de BlindTeX para la transformación de fórmulas individuales, no hace falta instalar nada más. Sólo descargar blindTeX de "http://www.github.com/justinux75/blindtex/" y ejecutar el script indicado en el párrafo anterior.
+
+
+Para una instalación completa, es importante notar que no proporcionamos un autoinstalable y el proceso se debe realizar  manualmente siguiendo los siguientes pasos:
+1. Descargar o clonar el repositorio. Colocarlo preferiblemente en el directorio de inicio de su usuario:
+‘C:\Users/[user's name]\blindtex’, en Windows), o '/Users/[user's name]/blindtex' en Linux o MacOS.
+2. Los usuarios de Windows pueden crear un enlace directo del  script blt.bat situado en \blindtex\SCRIPTS\Windows\blt.bat" y colocarlo en el escritorio para ejecutar  la interfaz gráfica de BlindTeX. 
+Sin embargo, para usar BlindTeX desde la terminal es necesario seguir los siguientes pasos 
+a. Mueva el archivo blt.bat para Windows, o 'blt.' para Unix, a un directorio que se encuentre en la variable PATH del usuario. Si no sabe qué significa esto, le sugerimos crear un directorio llamado 'bin' en el directorio de inicio del usuario:
+‘C:\Users/[user's name]\bin’, en Windows), o '/Users/[user's name]/bin' en Linux  o MacOS. Esto lo puede hacer desde la terminal:
+mkdir %homepath%\bin
+en Windows, y,
+mkdir $HOME/bin
+en Linux o MaCOS.
+
+b. Incluya el directorio 'bin' en el PATH del usuario: 
+En Windows presione la tecla Windows  y X, y 
+despues presione  ‘a’ para abrir un terminal  Power Shell con privilegios de administrador, y . escriba:
+ sysdm.cpl
+ para abrir las propiedades del sistema. Vaya a la pestaña de 'Opciones Avanzadas' ’ y allí vaya  a 'Variables de usuario'. Elija la variable "PATH" y añada    la ruta exacta al directorio 'bin' que creó en el paso anterior. 
+ En  Linux o MacOS abra una  terminal y  edite el archivo oculto ‘.bash_profile’ , por ejemplo,
+open -a textedit .bash_profile
+en MacOS.
+y escriba lo siguiente al final del archivo: 
+export PATH=“$PATH:~/bin”
+3. Ponga el script 'blt.bat (para Windows) o 'blt' (para Unix)  contenidos en la carpeta "BlindTeX/scripts/(Windows o Unix)"   en  la carpeta 'bin' creada recientemente. . En Unix, y desde la terminal muévase a la carpeta 'bin
+cd ~/bin
+ y de permisos de ejecución:
+chmod a+x blt
+   
+
+Si todo ha ido bien, tanto en la terminal de Windows como en Unix, escribiendo
+blt
+y pulsando Enter debería aparecer una ventana   de BlindTeX. 
+USO:
+1. escriba 'blt' y pulse Enter en la terminal, o haga doble click en el acceso directo en el escritorio que  se creó en un paso anterior. Esto abrirá  una instancia de la interfaz gráfica de BlindTeX.
+ En dicha interfaz hay dos paneles de texto, uno para introducir la fórmula en formato LaTeX (sin los delimitadores "$" de ecuaciones), y el otro panel de texto donde aparecerá la traducción en lenguaje natural al pulsar las teclas Alt y L,simultáneamente. 
+En el menú puede acceder a esta opción mediante el  menú 'Acciones'>'Conversión Literal'.
+
+ 
+2. Si desea convertir un documento LaTeX completo a xHTML con las fórmulas convertidas a lenguaje natural, vaya al menú   , go   "Acciones">"convertir documento", y seleccione  el documento LaTeX   a convertir. .
+  
+USO EN LA TERMINAL:
+Podemos usar BlindTeX en el terminal en dos formas:
+
+1. Convirtiendo documentos completos de LaTeX.
+El uso más frecuente de BlindTeX es el siguiente:
+1.- Abra una terminal  (cmd) en la carpeta  donde está situado el archivo LaTeX.
+2. Primero, es importante asegurarse que el documento LaTeX está escrito con una sintáxis correcta.  , Por ello enfatizamos que compile el documento con el comando "pdflatex" varias veces:
+pdflatex file.tex
+Y si no hay problemas, procedemos con el siguiente comando:
+blt -abuo file.tex  
+Con file.tex isiendo    "file.tex el nombre del documento LaTeX"   a convertir.. Este comando creará un número de  archivos, pero , el que nos interesará será ‘file.xhtml’.
+  Las opciones ‘-abuo’ significan:
+1. -o: This Esta es la opción para producir el  archivo de salida (output)  (.Este no es opcional si queremos la  conversión de un documento completo de    LaTeX. Esta opción es la que hace uso del programa  LaTeXML.
+-a: Esta opción hace que BlindTeX lea las etiquetas   de las ecuaciones correctamente. Estas etiquetas se excriben en el archivo "file.aux" cuando el archivo "file.tex" es compilado con LaTeX. Por ello, para usar esta opción es necesario haber compilado el documento LaTeX previamente con el comando 'pdflatex'). Esta opción no es obligatoria..
+ -u: Esta opción permite deshacer  las macros escritas por el autor del documento LaTeX, de forma que BlindTeX pueda acceder a la descripción LaTeX natural de las ecuaciones. Con esta opción, BlindTeX busca macros solamente en el preámbulo del documento, esto es, entre los  comandos LaTeX ‘\documentclass’ o ‘\documentstyle’ y  ‘\begin{document}’). Esta opción tampoco es obligatoriia. 
+-b:  Esta opción permite que el navegador abra el documento xhtml convertido una vez termine el proceso de conversión. Opción no obligatoria.
+
+A  parte del archivo xHTML, y otros archivos de estilo, BlindTeX genera un archivo cuyo nombre comienza con "TroubleFormulas_...txt" donde escribe las fórmulas problemáticas. En el archivo xHTML convertido dichas fórmulas aparecerán con la etiqueta "Bad Formulas".
+2. Conversión de fórmulas individuales en la terminal: :
+Este procedimiento permite convertir fórmulas individuales en el terminal. La sintaxis es como sigue:
+blt -e "LaTeXFormula"
+donde LaTeXFormula es la formula en código LaTeX sin los delimitadores de ecuaciones ("$"). Note el entrecomillado es importante para que no separe la ecuación cuando encuentre un espacio.
+Un ejemplo:
+blt -e "\frac{1}{2}\int_0^\infty f(x)\,dx"
+El resultado se mostrará en la salida estándar.
+También es posible usar el comando con tuberías,p.e.
+blt -e < file.txt
+donde 'file.txt' es un archivo con las fórmulas  en formato LaTeX (sin delimitadores) tal y como exporta programas como Maxima.
+
+
+USO AVANZADO:
+BlindTeX permite personalizar los diccionarios de traducción a lenguaje natural. Desde la interfaz gráfica es posible añadir traducciones alas ya existentes, añadir nuevos comandos LaTeX, cambiar traducciones,  borrar, etc.
+(ver la documentación).

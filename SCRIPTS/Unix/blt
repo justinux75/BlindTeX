@@ -1,5 +1,5 @@
 #!/bin/bash
-BTX="$HOME/BlindTeX/"
+BTX="$HOME/blindtex/BlindTeX/"
 Directorio="`pwd`"
 cd $BTX
 if [ "$#" -eq 0 ] ; then

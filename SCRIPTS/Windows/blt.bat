@@ -1,5 +1,5 @@
 @echo off
-SET BTX="%homepath%\BlindTeX"
+SET BTX="%homepath%\blindtex\BlindTeX"
 SET LOCAL=%cd%
 SET var=%LOCAL%\
 PUSHD %BTX%
